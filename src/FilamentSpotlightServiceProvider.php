@@ -49,4 +49,20 @@ class FilamentSpotlightServiceProvider extends PluginServiceProvider
 
         Filament::registerRenderHook('scripts.end', fn () => Blade::render("@livewire('livewire-ui-spotlight')"));
     }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(__DIR__.'/../config/cswni-spotlight.php', 'cswni-spotlight');
+    }
+
+    protected function configurePublishing(): void
+    {
+        if (! $this->app->runningInConsole()) {
+            return;
+        }
+
+        $this->publishes([
+            __DIR__.'/../config/cswni-spotlight.php' => config_path('cswni-spotlight.php'),
+        ], 'cswni-spotlight-config');
+    }
 }

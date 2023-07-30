@@ -13,6 +13,12 @@ class RegisterPages
         $pages = Filament::getPages();
 
         foreach ($pages as $page) {
+            $exclude = config('cswni-spotlight.exclude');
+
+            if(is_array($exclude) && in_array($page, $exclude)) {
+                continue;
+            }
+            
             $name = \Livewire\invade(new $page())->getTitle();
             $url = $page::getUrl();
 
